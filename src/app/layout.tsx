@@ -34,25 +34,17 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+/** The page is dark only, so the browser chrome matches unconditionally. */
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#edefea" },
-    { media: "(prefers-color-scheme: dark)", color: "#0e1215" },
-  ],
+  themeColor: "#0e1215",
 };
-
-/** Applies a stored theme choice before first paint, so the toggle never flashes. */
-const themeScript = `try{var t=localStorage.getItem("tm-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(e){}`;
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${sans.variable} ${serif.variable} ${mono.variable}`}>
-      <body>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

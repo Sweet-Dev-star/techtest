@@ -1,64 +1,10 @@
 /* ------------------------------------------------------------------
-   Design system — drafting/spec-sheet identity
-   Tokens first, components after. Every colour comes from a token so
-   both themes resolve as a set; nothing is defined only inside a
-   media query or a [data-theme] block.
+   Design system — drafting/spec-sheet identity, dark only.
+   This page commits to one visual world: there is no light palette and
+   no toggle, so every colour is defined once, here.
    ------------------------------------------------------------------ */
 
 :root {
-  --paper: #edefea;
-  --card: #fbfbf7;
-  --sunk: #e3e7df;
-  --ink: #12161a;
-  --ink-2: #39424a;
-  --muted: #5b646b;
-  --rule: #d2d7cd;
-  --rule-hard: #a9b1a6;
-  --blue: #1b4b7a;
-  --amber: #8f5406;
-  --amber-soft: #f6ebd8;
-  --amber-rule: #d9b372;
-  --green: #2c6349;
-  --red: #8c3222;
-
-  --sans: var(--font-sans), "Helvetica Neue", Arial, sans-serif;
-  --serif: var(--font-serif), Georgia, "Times New Roman", serif;
-  --mono: var(--font-mono), ui-monospace, "SFMono-Regular", Consolas, monospace;
-
-  --fs-xs: 0.6875rem;
-  --fs-sm: 0.8125rem;
-  --fs-md: 0.9375rem;
-  --fs-base: 1.0625rem;
-  --fs-lg: 1.1875rem;
-
-  --maxw: 1220px;
-  --gutter: clamp(20px, 4vw, 40px);
-
-  color-scheme: light;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --paper: #0e1215;
-    --card: #161b1f;
-    --sunk: #1b2126;
-    --ink: #e8ebe5;
-    --ink-2: #c0c7c2;
-    --muted: #96a09a;
-    --rule: #282f34;
-    --rule-hard: #3d464c;
-    --blue: #89b7df;
-    --amber: #e2a85b;
-    --amber-soft: #241b0e;
-    --amber-rule: #5c4623;
-    --green: #7cc29c;
-    --red: #e08d7a;
-
-    color-scheme: dark;
-  }
-}
-
-:root[data-theme="dark"] {
   --paper: #0e1215;
   --card: #161b1f;
   --sunk: #1b2126;
@@ -74,6 +20,20 @@
   --green: #7cc29c;
   --red: #e08d7a;
 
+  --sans: var(--font-sans), "Helvetica Neue", Arial, sans-serif;
+  --serif: var(--font-serif), Georgia, "Times New Roman", serif;
+  --mono: var(--font-mono), ui-monospace, "SFMono-Regular", Consolas, monospace;
+
+  --fs-xs: 0.6875rem;
+  --fs-sm: 0.8125rem;
+  --fs-md: 0.9375rem;
+  --fs-base: 1.0625rem;
+  --fs-lg: 1.1875rem;
+
+  --maxw: 1220px;
+  --gutter: clamp(20px, 4vw, 40px);
+
+  /* Tells the browser to render form controls and scrollbars dark too. */
   color-scheme: dark;
 }
 
@@ -248,24 +208,6 @@ h1 {
 .deck b {
   color: var(--ink);
   font-weight: 600;
-}
-
-.theme-toggle {
-  font-family: var(--mono);
-  font-size: var(--fs-xs);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  background: transparent;
-  border: 1px solid var(--rule);
-  padding: 6px 12px;
-  cursor: pointer;
-  line-height: 1.4;
-}
-
-.theme-toggle:hover {
-  color: var(--ink);
-  border-color: var(--rule-hard);
 }
 
 /* ---------- spec strip ---------- */

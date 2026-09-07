@@ -1,4 +1,3 @@
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { site } from "@/config/site";
 import { deck, headline, specStrip } from "@/content/assessment";
 
@@ -14,7 +13,6 @@ export function Masthead() {
             <span className="dot">/</span>
             <span>Take-home assessment&nbsp;&middot;&nbsp;{site.revision}</span>
           </div>
-          <ThemeToggle />
         </div>
 
         <div className="mast-body">
