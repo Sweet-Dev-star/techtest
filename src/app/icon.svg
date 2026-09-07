@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Task manager take-home">
+  <!-- Solid field in the drafting blue the brief uses for structure. A filled
+       tile keeps the mark legible on both light and dark browser chrome. -->
+  <rect width="32" height="32" rx="6" fill="#1B4B7A" />
+  <!-- Heavy tick: stroke is 5 of 32, so the mark still reads at 16px. -->
+  <path
+    d="M8.5 16.5 L13.5 21.5 L23.5 10.5"
+    fill="none"
+    stroke="#EDEFEA"
+    stroke-width="5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>
