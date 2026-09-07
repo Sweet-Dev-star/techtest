@@ -57,8 +57,9 @@ export function BaseProject() {
             </tr>
           </thead>
           <tbody>
+            {/* A path alone is not unique: GET and POST /lists are different rows. */}
             {baseProject.endpoints.map((row) => (
-              <tr key={row.path}>
+              <tr key={`${row.method} ${row.path}`}>
                 <td className="k">
                   <span className="verb">{row.method}</span>
                 </td>
