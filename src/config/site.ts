@@ -14,7 +14,15 @@ export const site = {
   /** Subject line we ask candidates to use. */
   emailSubject: "Full-Stack Take-Home — Your Name",
 
-  /** Time budget shown in the spec strip and the ground rules. */
+  /** The starter candidates build on. */
+  starterRepo: "https://github.com/Sweet-Dev-star/techtest",
+  starterDir: "basic/",
+  starterRuntime: "Node 24+",
+
+  /**
+   * Time budget shown in the spec strip and the ground rules.
+   * The baseline is provided, so this is the budget for the three problems.
+   */
   effort: "10–14 hours",
   window: "7 days from receipt",
   /** Git tag we review. */

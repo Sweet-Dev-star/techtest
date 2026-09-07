@@ -452,6 +452,15 @@ h2 {
   margin-top: 8px;
 }
 
+/* Trailing aside under a block — quieter than body text, not a caption. */
+.hint {
+  color: var(--muted);
+  font-size: var(--fs-md);
+  max-width: 66ch;
+  padding-left: 14px;
+  border-left: 2px solid var(--rule);
+}
+
 .prose {
   max-width: 68ch;
 }

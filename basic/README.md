@@ -23,6 +23,20 @@ After `npm run seed`, sign in with **demo@example.com** / **password123**.
 Configuration is environment variables with working defaults — see `.env.example`.
 There is no dotenv dependency, so either export them or use `node --env-file=.env`.
 
+## Using another stack
+
+This starter is a reference, not a cage. Port it to Python, Go, Ruby, Java, PHP, Rust or
+.NET if you would rather be judged in your own language — two things have to survive the
+port:
+
+1. **The API contract below** — same paths, same status codes, same error shape.
+2. **What the schema means** — the tables may be named differently, but the rules they
+   encode (case-insensitive unique email, a task belongs to exactly one list, only a
+   session token's hash is stored) still hold.
+
+The porting hours come out of your own budget, and the port is reviewed as part of your
+work. Name your choice in the first line of `DECISIONS.md`.
+
 ## What works
 
 | Area | Included |

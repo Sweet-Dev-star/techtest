@@ -23,7 +23,7 @@ export const deck: ReactNode = (
 
 export const specStrip: { term: string; value: string; note: string }[] = [
   { term: "Effort", value: site.effort, note: site.window },
-  { term: "Stack", value: "Your choice", note: "server + client + database" },
+  { term: "Starting point", value: "Baseline provided", note: `${site.starterRuntime} · port allowed` },
   { term: "Code", value: "Hand-written", note: "see rule 0" },
   { term: "Submission", value: "GitHub repository", note: "link by email" },
 ];
@@ -32,33 +32,80 @@ export const specStrip: { term: string; value: string; note: string }[] = [
 
 export const baseProject = {
   lede:
-    "A task manager with accounts, lists and tasks. Build this first and keep it plain — it is the floor, not the test. Nothing here scores on its own; it exists so the three problems have somewhere to live.",
+    "You do not build this part — we ship it. Clone the starter, run it, read it, then build the three problems on top. It exists so that nobody spends their week on login forms, and so that every submission we read starts from the same floor. Nothing in it scores on its own.",
 
-  baseline: [
+  runNote: (
     <>
-      <b>Accounts.</b> Register, sign in, sign out. One person&rsquo;s data is never visible
-      to another.
+      {site.starterRuntime}, and nothing to install: the starter has zero dependencies and
+      uses <code>node:http</code>, <code>node:sqlite</code>, <code>node:crypto</code> and{" "}
+      <code>node:test</code>. If <code>npm start</code> does not work on a clean clone,
+      tell us — that is our bug, not yours.
+    </>
+  ),
+
+  run: [
+    `git clone ${site.starterRepo}`,
+    `cd techtest/${site.starterDir.replace("/", "")}`,
+    "npm start        # http://127.0.0.1:4000",
+    "npm run seed     # demo@example.com / password123",
+    "npm test         # 31 tests, all green",
+  ].join("\n"),
+
+  included: [
+    <>
+      <b>Accounts.</b> Register, sign in, sign out. scrypt password hashes, an HttpOnly
+      session cookie, and only the token&rsquo;s SHA-256 stored.
     </>,
     <>
-      <b>Lists.</b> Create, rename, delete. A task always belongs to exactly one list.
+      <b>Lists and tasks.</b> Full CRUD, notes, priority, due dates, and a live count of
+      unfinished tasks per list.
     </>,
     <>
-      <b>Tasks.</b> Title, optional notes, priority, due date, done / not done.
+      <b>Views.</b> Filter by status and due date, search titles, sort by created, due or
+      priority — with keyset cursors rather than <code>OFFSET</code>.
     </>,
     <>
-      <b>Views.</b> Filter by status and due date, sort by due date or priority, free-text
-      search on title.
+      <b>Storage.</b> SQLite with numbered SQL migrations, applied on boot.
     </>,
     <>
-      <b>Persistence.</b> A real database with migrations. Restarting the server loses
-      nothing.
+      <b>Isolation.</b> One user cannot read or touch another&rsquo;s data, and there is a
+      test proving it.
+    </>,
+    <>
+      <b>A web client.</b> Framework-free ES modules, no build step. Replace it with React
+      or anything else if you prefer.
+    </>,
+  ] satisfies ReactNode[],
+
+  omitted: [
+    <>
+      <b>No version column on tasks</b>, so <code>PATCH</code> is last-write-wins today.
+      Problem 2 changes that.
+    </>,
+    <>
+      <b><code>parent_id</code> exists, is indexed, and is never set.</b> Problem 1 gives it
+      meaning.
+    </>,
+    <>
+      <b>No rate limiting, no CSRF token</b> beyond a <code>SameSite=Lax</code> cookie.
+      Problem 3&rsquo;s territory.
+    </>,
+    <>
+      <b>The client re-renders everything on every change.</b> Fine for fifty tasks, wrong
+      for five thousand — also Problem 2.
+    </>,
+    <>
+      <b>No tags, no soft delete.</b> Add them if you want them; say why in{" "}
+      <code>DECISIONS.md</code>.
     </>,
   ] satisfies ReactNode[],
 
   schemaNote: (
     <>
-      Rename, split or extend anything below — but if you change it, say why in{" "}
-      <code>DECISIONS.md</code>. Two of the three problems push directly on this schema.
+      What the starter creates in <code>migrations/001_initial.sql</code>. Extend it by
+      adding a numbered migration — never by editing one that has already been applied,
+      the way you would treat a database you cannot drop. Two of the three problems push
+      directly on this schema.
     </>
   ),
 
@@ -84,9 +131,9 @@ export const baseProject = {
       ),
     },
     {
-      table: "tags",
-      columns: "id · owner_id · name · colour",
-      notes: <>Optional. Drop it if time is short.</>,
+      table: "sessions",
+      columns: "token_hash · user_id · created_at · expires_at",
+      notes: <>Only the hash. A leaked database hands out no live sessions.</>,
     },
   ],
 
@@ -96,7 +143,8 @@ export const baseProject = {
       path: "/auth/register · /auth/login · /auth/logout",
       does: <>Session or token — your call, defend it.</>,
     },
-    { method: "GET", path: "/lists", does: <>Lists the caller can see.</> },
+    { method: "GET", path: "/auth/me", does: <>{`{ user: null }`} when signed out.</> },
+    { method: "GET", path: "/lists", does: <>With an open-task count per list.</> },
     { method: "POST", path: "/lists", does: <>Create a list.</> },
     {
       method: "GET",
@@ -108,12 +156,20 @@ export const baseProject = {
     {
       method: "DELETE",
       path: "/tasks/:id",
-      does: <>Soft or hard delete — decide and justify.</>,
+      does: <>Hard delete. Make it a soft delete if you can justify it.</>,
     },
   ],
 
+  apiNote: (
+    <>
+      Errors come back as <code>{`{ error: { code, message } }`}</code>. A resource you may
+      not see returns <b>404, not 403</b> — the API never confirms that other
+      people&rsquo;s data exists. Keep that property as you extend it.
+    </>
+  ),
+
   repoNote:
-    "A suggestion, not a rule. Whatever you choose, a reviewer should be able to guess where a file lives before opening the folder.",
+    "What you clone. The annotations mark where each problem attaches — the starter's own README goes into more detail on each seam.",
 };
 
 /* ---------------------------------- §02 --------------------------------- */
@@ -343,13 +399,18 @@ export const groundRules = {
 
   rest: [
     <>
-      <b>Any stack.</b> Node, Python, Go, Ruby, Java, PHP, Rust, .NET — whatever you are
-      fastest and most honest in. It needs a real server, a real client and a persistent
-      database. Tell us why you chose it.
+      <b>Start from the starter — or port it.</b> The starter is {site.starterRuntime} with
+      zero dependencies, and it is a reference, not a cage. If you would rather be judged in
+      Python, Go, Ruby, Java, PHP, Rust or .NET, port it and work there. Two things have to
+      survive the port: <b>the API contract</b> (same paths, same status codes, same error
+      shape) and <b>what the schema means</b>. The porting hours come out of your own
+      budget, and we review the port as part of your work. Either way, name your choice in
+      the first line of <code>DECISIONS.md</code>.
     </>,
     <>
-      <b>Budget the time.</b> Aim for {site.effort} across the week. We would rather see the
-      baseline plus two solid problems than three rushed ones. Say what you cut.
+      <b>Budget the time.</b> Aim for {site.effort} on the three problems — the baseline is
+      already built, so that whole budget is yours for the hard parts. We would rather see
+      two solid problems than three rushed ones. Say what you cut.
     </>,
     <>
       <b>Scope down before you fake up.</b> A stub with a clear <code>TODO</code> and a
@@ -452,12 +513,16 @@ export const submission = {
 
   steps: [
     <>
-      <b>Create the repository.</b> Public is easiest. If you prefer private, invite{" "}
-      <code>{site.reviewerHandle}</code> as a collaborator and say so in your email.
+      <b>Copy the starter into your own repository.</b> Take the{" "}
+      <code>{site.starterDir}</code> folder from{" "}
+      <a href={site.starterRepo}>the starter repo</a> into a fresh repository of your own —
+      forking works too, but a clean repo keeps your history readable. Public is easiest; if
+      you prefer private, invite <code>{site.reviewerHandle}</code> and say so in your email.
     </>,
     <>
       <b>Commit as you go.</b> Small, scoped commits with real messages, across the days you
-      actually worked. Don&rsquo;t squash the history before sending it.
+      actually worked, and clearly yours rather than folded into the starter&rsquo;s first
+      commit. Don&rsquo;t squash the history before sending it.
     </>,
     <>
       <b>Write the README.</b> One command to run it, one command to test it, prerequisites,
@@ -540,6 +605,29 @@ export const faq: { q: string; a: ReactNode }[] = [
         Most people can&rsquo;t, and that is the point. Do the baseline, then as many problems
         as you can do properly, then write down what you left and how you&rsquo;d approach it.
         Prioritisation is part of what we are measuring.
+      </>
+    ),
+  },
+  {
+    q: "Do I have to use the Node starter?",
+    a: (
+      <>
+        No. Port it to whatever you would rather be judged in — the API contract and the
+        schema&rsquo;s meaning are what must survive, not the language. Be honest with
+        yourself about the trade: a port might cost two of your hours, and those hours come
+        off the three problems. If Node is fine by you, starting where the starter starts is
+        not a mark against you.
+      </>
+    ),
+  },
+  {
+    q: "Can I rewrite parts of the starter I disagree with?",
+    a: (
+      <>
+        Yes, and telling us why is worth more than the rewrite. It is ordinary code with
+        ordinary compromises — if you would have modelled something differently, change it
+        and put a paragraph in <code>DECISIONS.md</code>. What we do not want is a silent
+        rewrite we have to discover by diffing.
       </>
     ),
   },
