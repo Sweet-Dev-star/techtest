@@ -91,8 +91,9 @@ export const baseProject = {
       Problem 3&rsquo;s territory.
     </>,
     <>
-      <b>The client re-renders everything on every change.</b> Fine for fifty tasks, wrong
-      for five thousand — also Problem 2.
+      <b>The client re-renders everything on every change.</b> Honest rather than
+      half-optimised; performance is not scored, but the sync state you add in Problem 2
+      has to live somewhere in it.
     </>,
     <>
       <b>No tags, no soft delete.</b> Add them if you want them; say why in{" "}
@@ -265,7 +266,11 @@ export const problems: Problem[] = [
       </>,
     ],
     requirements: [
-      <>Create, edit, complete and delete all work with the network off, from a cold page load.</>,
+      <>
+        Create, edit, complete and delete all keep working with the network off, once the
+        app has loaded. A service worker is welcome but not required &mdash; we will test by
+        loading the page, then going offline.
+      </>,
       <>
         Every change is queued durably and replayed in order on reconnect. Closing the tab
         does not drop the queue.
@@ -283,13 +288,12 @@ export const problems: Problem[] = [
         acceptable <em>only</em> if you argue for it in <code>DECISIONS.md</code>.
       </>,
       <>Each row shows its own state: pending, synced, failed. Failed is retryable.</>,
-      <>5,000 tasks in one list still filter, sort and scroll smoothly.</>,
     ],
     readFor: [
       <>Who owns the truth — server cache, local store, or an unhappy mixture of both</>,
       <>Rollback on failure: does the UI actually return to a correct state?</>,
       <>Whether the sync layer is testable without a browser</>,
-      <>Re-render discipline on a large list</>,
+      <>Whether a failed replay can be retried without duplicating work</>,
     ],
     doneWhen: [
       <>An airplane-mode walkthrough in the README that we can repeat</>,
@@ -486,6 +490,16 @@ export const scoring = {
     },
   ],
 
+  partialCredit: (
+    <>
+      <b>On finishing fewer than three.</b> Problem correctness is scored on what you
+      actually took on. Name the problems you attempted at the top of your README, and we
+      grade those on their merits rather than averaging in ones you never started. One
+      problem finished properly scores above three left half-built &mdash; so if the week
+      gets away from you, stop and polish rather than starting another.
+    </>
+  ),
+
   separators: [
     <>
       <b>Naming the trade-off you took, and its cost.</b> Every real decision has one.
@@ -599,7 +613,7 @@ export const faq: { q: string; a: ReactNode }[] = [
     ),
   },
   {
-    q: "I can’t finish all three in 14 hours.",
+    q: "I can’t finish all three in the time budget.",
     a: (
       <>
         Most people can&rsquo;t, and that is the point. Do the baseline, then as many problems

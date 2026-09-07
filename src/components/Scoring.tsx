@@ -27,6 +27,8 @@ export function Scoring() {
         </table>
       </div>
 
+      <p className="hint">{scoring.partialCredit}</p>
+
       <div className="prose">
         <h3>What consistently separates candidates</h3>
         <Ticks items={scoring.separators} />

@@ -11,8 +11,18 @@ if (config.databaseFile === ":memory:") {
 const removed = [config.databaseFile, `${config.databaseFile}-shm`, `${config.databaseFile}-wal`].filter(
   (file) => {
     if (!fs.existsSync(file)) return false;
-    fs.rmSync(file);
-    return true;
+    try {
+      fs.rmSync(file);
+      return true;
+    } catch (error) {
+      // Windows locks an open SQLite file; the server is almost certainly running.
+      if (error.code === "EPERM" || error.code === "EBUSY") {
+        console.error(`Cannot delete ${file} — it is still open.`);
+        console.error("Stop the server (Ctrl+C in the terminal running it), then run this again.");
+        process.exit(1);
+      }
+      throw error;
+    }
   },
 );
 

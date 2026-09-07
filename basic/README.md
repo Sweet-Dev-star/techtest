@@ -14,6 +14,7 @@ Node 24 or newer. There are no dependencies to install — the server uses `node
 npm start          # http://127.0.0.1:4000  (migrations run on boot)
 npm run dev        # same, restarting on file changes
 npm run seed       # demo account + three lists of tasks
+npm run seed -- --tasks 5000   # plus one list of 5,000, to see it at size
 npm test           # 31 tests, no server needed for the domain ones
 npm run reset      # delete the database and start over
 ```
@@ -114,11 +115,12 @@ pure logic and should be testable without a database. `queryTasks` in
 reading, and the wrong one once a task repeats at 09:00 local across a DST boundary.
 
 **Problem 2 — offline editing and conflicts.** `public/js/store.js` is ten lines and
-re-renders everything on every change: fine for fifty tasks, openly wrong for five
-thousand. There is no version column on `tasks` yet, so `PATCH /tasks/:id` is
-last-write-wins — see the comment in `http/routes/tasks.js` where a 409 belongs. IDs are
-UUIDs generated server-side; moving that to the client is one way to make replay
-idempotent.
+re-renders everything on every change — honest rather than half-optimised, and the place
+your sync state has to live. There is no version column on `tasks` yet, so
+`PATCH /tasks/:id` is last-write-wins; see the comment in `http/routes/tasks.js` where a
+409 belongs. `updated_at` is maintained on every write if you want to build the version
+check on it. IDs are UUIDs generated server-side; moving that to the client is one way to
+make replay idempotent.
 
 **Problem 3 — sharing, roles and audit.** `db/repositories/access.js` is the single place
 that decides whether a user may touch a list or a task, and every route goes through it.
@@ -131,6 +133,9 @@ call sites — not an audit of every handler. `deleteSessionsForUser` is already
 Not oversights — decisions, so you can spend your hours on the problems:
 
 - **No tags.** The brief lists them as optional; add the table if you want them.
+- **No CHECK on `tasks.status`.** SQLite cannot alter a CHECK constraint, so one would
+  force a table rebuild the first time you added a value like `skipped`. Allowed values
+  live in `domain/tasks.js` instead.
 - **No rate limiting** on login or invites. Problem 3 asks for it.
 - **No CSRF token.** The session cookie is `SameSite=Lax`, which covers the obvious case
   but is not a complete answer.

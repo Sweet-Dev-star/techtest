@@ -44,7 +44,11 @@ CREATE TABLE tasks (
   title        TEXT NOT NULL,
   notes        TEXT,
   priority     INTEGER NOT NULL DEFAULT 2,  -- 1 low, 2 normal, 3 high
-  status       TEXT NOT NULL DEFAULT 'open' CHECK (status IN ('open', 'done')),
+  -- No CHECK on status, deliberately. SQLite cannot alter a CHECK constraint --
+  -- changing one means rebuilding the table -- and Problem 1 may well want a
+  -- third value such as 'skipped'. Allowed values live in domain/tasks.js,
+  -- where they are one edit and a test away.
+  status       TEXT NOT NULL DEFAULT 'open',
   due_at       TEXT,                        -- ISO 8601, UTC
   completed_at TEXT,
   created_at   TEXT NOT NULL,

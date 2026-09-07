@@ -5,9 +5,9 @@ import { createStore } from "./store.js";
 /**
  * The whole UI: a store, a render function, and a handful of actions.
  *
- * It re-renders everything on every change. That is fine for a few dozen tasks
- * and openly wrong for five thousand — which is Problem 2's territory, so it is
- * left honest rather than half-optimised.
+ * It re-renders everything on every change. That is fine at this size and will
+ * not stay fine as a list grows — left honest rather than half-optimised, since
+ * Problem 2 gives this file a lot more to hold.
  */
 
 const root = document.getElementById("root");

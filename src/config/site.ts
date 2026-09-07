@@ -23,8 +23,8 @@ export const site = {
    * Time budget shown in the spec strip and the ground rules.
    * The baseline is provided, so this is the budget for the three problems.
    */
-  effort: "10–14 hours",
-  window: "7 days from receipt",
+  effort: "16–20 hours",
+  window: "10 days from receipt",
   /** Git tag we review. */
   submissionTag: "v1.0-submission",
 
