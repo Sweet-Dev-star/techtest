@@ -13,8 +13,9 @@ export const headline = "Build a task manager. Then solve three problems inside 
 
 export const deck: ReactNode = (
   <>
-    The base app is deliberately boring — lists, tasks, done or not done. We hand you its
-    shape so you don&rsquo;t spend your week on scaffolding. What we actually read is the{" "}
+    The base app is deliberately boring — lists, tasks, done or not done. We ship it
+    working, so you don&rsquo;t spend the clock on scaffolding. What we actually read is
+    the{" "}
     <b>three problems buried in it</b>: recurrence and hierarchy, offline editing and
     conflicts, shared access and permissions. Each one is a place where a real product
     quietly gets hard.
@@ -22,7 +23,7 @@ export const deck: ReactNode = (
 );
 
 export const specStrip: { term: string; value: string; note: string }[] = [
-  { term: "Effort", value: site.effort, note: site.window },
+  { term: "Time limit", value: site.effort, note: "from receipt — hard stop" },
   { term: "Starting point", value: "Baseline provided", note: `${site.starterRuntime} · port allowed` },
   { term: "Code", value: "Hand-written", note: "see rule 0" },
   { term: "Submission", value: "GitHub repository", note: "link by email" },
@@ -32,14 +33,15 @@ export const specStrip: { term: string; value: string; note: string }[] = [
 
 export const baseProject = {
   lede:
-    "You do not build this part — we ship it. Clone the starter, run it, read it, then build the three problems on top. It exists so that nobody spends their week on login forms, and so that every submission we read starts from the same floor. Nothing in it scores on its own.",
+    "You do not build this part — we ship it. Clone the starter, run it, read it, then build the three problems on top. It exists so that nobody spends the clock on login forms, and so that every submission we read starts from the same floor. Nothing in it scores on its own.",
 
   runNote: (
     <>
       {site.starterRuntime}, and nothing to install: the starter has zero dependencies and
       uses <code>node:http</code>, <code>node:sqlite</code>, <code>node:crypto</code> and{" "}
       <code>node:test</code>. If <code>npm start</code> does not work on a clean clone,
-      tell us — that is our bug, not yours.
+      tell us — that is our bug, not yours. Nothing stops you cloning and running it
+      before your clock starts; getting a database up is not what we are testing.
     </>
   ),
 
@@ -187,7 +189,7 @@ export type Problem = {
 };
 
 export const problemsLede =
-  "Each sits in a different layer of the stack, and each has an obvious shortcut that falls apart under a second look. Solve them in order — they share the same data. If you run out of time, a finished Problem 1 and an honest note about the rest beats three sketches.";
+  "Each sits in a different layer of the stack, and each has an obvious shortcut that falls apart under a second look. Eight hours is not enough for all three, and we do not expect all three — read them, pick where you are strongest, and go deep. One problem finished properly tells us far more than three sketches. They share the same data, so Problem 1 is the natural place to start.";
 
 export const problems: Problem[] = [
   {
@@ -412,9 +414,10 @@ export const groundRules = {
       the first line of <code>DECISIONS.md</code>.
     </>,
     <>
-      <b>Budget the time.</b> Aim for {site.effort} on the three problems — the baseline is
-      already built, so that whole budget is yours for the hard parts. We would rather see
-      two solid problems than three rushed ones. Say what you cut.
+      <b>{site.effort}, hard stop.</b> The clock starts when we send the brief and does not
+      pause, so tell us the day that suits you and we will send it that morning. Spend the
+      first half hour reading the starter and deciding what you will attempt — that choice
+      is part of what we are assessing. When the time is up, push what you have.
     </>,
     <>
       <b>Scope down before you fake up.</b> A stub with a clear <code>TODO</code> and a
@@ -492,11 +495,11 @@ export const scoring = {
 
   partialCredit: (
     <>
-      <b>On finishing fewer than three.</b> Problem correctness is scored on what you
-      actually took on. Name the problems you attempted at the top of your README, and we
-      grade those on their merits rather than averaging in ones you never started. One
-      problem finished properly scores above three left half-built &mdash; so if the week
-      gets away from you, stop and polish rather than starting another.
+      <b>On finishing fewer than three.</b> In eight hours most candidates finish one.
+      That is the expected outcome, not a shortfall. Name the problems you attempted at the
+      top of your README and we grade those on their merits, rather than averaging in ones
+      you never started. One problem finished properly scores above three left half-built
+      &mdash; so when the clock gets short, stop and polish rather than starting another.
     </>
   ),
 
@@ -523,7 +526,7 @@ export const scoring = {
 /* ---------------------------------- §05 --------------------------------- */
 
 export const submission = {
-  lede: "Push it to GitHub and send us the link. That link is the whole submission — no archives, no attachments.",
+  lede: "Push it to GitHub and send us the link before your eight hours are up. That link is the whole submission — no archives, no attachments — and the timestamp on your email is the one we go by.",
 
   steps: [
     <>
@@ -534,9 +537,10 @@ export const submission = {
       you prefer private, invite <code>{site.reviewerHandle}</code> and say so in your email.
     </>,
     <>
-      <b>Commit as you go.</b> Small, scoped commits with real messages, across the days you
-      actually worked, and clearly yours rather than folded into the starter&rsquo;s first
-      commit. Don&rsquo;t squash the history before sending it.
+      <b>Commit as you go.</b> Small, scoped commits with real messages, clearly yours
+      rather than folded into the starter&rsquo;s first commit. Don&rsquo;t squash the
+      history before sending it. If the clock runs out mid-change, commit it anyway with a
+      note — an honest unfinished branch beats a missed deadline.
     </>,
     <>
       <b>Write the README.</b> One command to run it, one command to test it, prerequisites,
@@ -613,12 +617,13 @@ export const faq: { q: string; a: ReactNode }[] = [
     ),
   },
   {
-    q: "I can’t finish all three in the time budget.",
+    q: "Can anyone really finish all three in eight hours?",
     a: (
       <>
-        Most people can&rsquo;t, and that is the point. Do the baseline, then as many problems
-        as you can do properly, then write down what you left and how you&rsquo;d approach it.
-        Prioritisation is part of what we are measuring.
+        No, and you are not meant to. The limit is deliberately less than the work, because
+        what you choose to do under it is most of what we learn about you. Pick what you can
+        finish, do it properly, and write down what you left and how you would have
+        approached it. Prioritisation is part of what we are measuring.
       </>
     ),
   },

@@ -20,11 +20,12 @@ export const site = {
   starterRuntime: "Node 24+",
 
   /**
-   * Time budget shown in the spec strip and the ground rules.
-   * The baseline is provided, so this is the budget for the three problems.
+   * Hard deadline, not a target. The clock starts when the brief is sent and
+   * does not pause; `window` keeps the " from receipt" suffix because §03
+   * strips it when quoting the duration on its own.
    */
-  effort: "16–20 hours",
-  window: "10 days from receipt",
+  effort: "8 hours",
+  window: "8 hours from receipt",
   /** Git tag we review. */
   submissionTag: "v1.0-submission",
 
