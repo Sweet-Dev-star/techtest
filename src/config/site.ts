@@ -14,9 +14,10 @@ export const site = {
   /** Subject line we ask candidates to use. */
   emailSubject: "Full-Stack Take-Home — Your Name",
 
-  /** The starter candidates build on. */
-  starterRepo: "https://github.com/Sweet-Dev-star/techtest",
-  starterDir: "basic/",
+  /** The starter candidates build on. It sits at the root of its own repo. */
+  starterRepo: "https://github.com/Trust-cpu/temple_test",
+  /** The directory a clone creates — used for the cd line and the layout tree. */
+  starterDir: "temple_test/",
   starterRuntime: "Node 24+",
 
   /**

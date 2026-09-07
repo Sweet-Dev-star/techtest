@@ -47,7 +47,7 @@ export const baseProject = {
 
   run: [
     `git clone ${site.starterRepo}`,
-    `cd techtest/${site.starterDir.replace("/", "")}`,
+    `cd ${site.starterDir.replace("/", "")}`,
     "npm start        # http://127.0.0.1:4000",
     "npm run seed     # demo@example.com / password123",
     "npm test         # 31 tests, all green",
@@ -530,11 +530,11 @@ export const submission = {
 
   steps: [
     <>
-      <b>Copy the starter into your own repository.</b> Take the{" "}
-      <code>{site.starterDir}</code> folder from{" "}
-      <a href={site.starterRepo}>the starter repo</a> into a fresh repository of your own —
-      forking works too, but a clean repo keeps your history readable. Public is easiest; if
-      you prefer private, invite <code>{site.reviewerHandle}</code> and say so in your email.
+      <b>Put the starter in your own repository.</b> Fork{" "}
+      <a href={site.starterRepo}>the starter repo</a>, or clone it and push to a fresh
+      repository of your own — either is fine, and a clean repo keeps your history readable.
+      Public is easiest; if you prefer private, invite <code>{site.reviewerHandle}</code> and
+      say so in your email.
     </>,
     <>
       <b>Commit as you go.</b> Small, scoped commits with real messages, clearly yours
