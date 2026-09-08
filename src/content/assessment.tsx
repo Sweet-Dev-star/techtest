@@ -50,7 +50,7 @@ export const baseProject = {
     `cd ${site.starterDir.replace("/", "")}`,
     "npm start        # http://127.0.0.1:4000",
     "npm run seed     # demo@example.com / password123",
-    "npm test         # 31 tests, all green",
+    "npm test         # 35 tests, all green",
   ].join("\n"),
 
   included: [

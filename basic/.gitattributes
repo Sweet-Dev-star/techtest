@@ -1,0 +1,8 @@
+# Normalise line endings so the starter reads the same on macOS, Linux and Windows.
+* text=auto eol=lf
+
+*.ico binary
+*.png binary
+*.jpg binary
+*.woff2 binary
+*.db binary

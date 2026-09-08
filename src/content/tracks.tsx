@@ -385,10 +385,10 @@ const qa: Problem[] = [
     id: "qa-1",
     tag: "Problem 1 · Strategy",
     meta: "weight 30% · medium",
-    title: "Audit the 31 tests you were given",
+    title: "Audit the 35 tests you were given",
     intro: [
       <>
-        The starter ships 31 passing tests. Passing tests are not the same as tested
+        The starter ships 35 passing tests. Passing tests are not the same as tested
         software. Work out what they actually cover, what they miss, and what a suite for
         this app should look like — then build the layer that is missing.
       </>,
@@ -523,7 +523,7 @@ const FOCUS: Record<DeveloperType, { focus: string; lede: string }> = {
   },
   qa: {
     focus: "Strategy, defect hunting, reliable automation",
-    lede: "The starter ships 31 passing tests, which is not the same as tested software. Three problems about knowing the difference and proving it.",
+    lede: "The starter ships 35 passing tests, which is not the same as tested software. Three problems about knowing the difference and proving it.",
   },
 };
 

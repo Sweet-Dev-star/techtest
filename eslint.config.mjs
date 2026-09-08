@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // The take-home starter is a separate React+Express workspace.
+    "basic/**",
   ]),
 ]);
 
