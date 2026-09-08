@@ -12,8 +12,6 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
-    // The take-home starter is plain Node ESM with its own conventions.
-    "basic/**",
   ]),
 ]);
 

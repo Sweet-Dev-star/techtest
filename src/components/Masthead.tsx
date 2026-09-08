@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { site } from "@/config/site";
 import { deck, headline, specStrip } from "@/content/assessment";
 
@@ -13,6 +14,13 @@ export function Masthead() {
             <span className="dot">/</span>
             <span>Take-home assessment&nbsp;&middot;&nbsp;{site.revision}</span>
           </div>
+
+          <nav className="mast-auth" aria-label="Account">
+            <Link href="/login">Sign in</Link>
+            <Link href="/register" className="primary">
+              Register
+            </Link>
+          </nav>
         </div>
 
         <div className="mast-body">

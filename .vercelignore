@@ -1,0 +1,6 @@
+# Vercel builds the Next.js app at the repo root. Nothing below is needed there.
+
+# Local build output — must never be uploaded, or the remote build inherits stale state.
+.next
+node_modules
+

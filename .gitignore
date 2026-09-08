@@ -40,8 +40,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# take-home starter runtime data
-/basic/data
 
 # ...but the starter's example env is documentation, not a secret
 !.env.example
+
+.vercel
+
+# local database for site registrations
+/data
