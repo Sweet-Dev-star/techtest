@@ -1151,3 +1151,93 @@ footer {
   color: var(--blue);
   border-color: var(--blue);
 }
+
+/* ------------------------------------------------------------------
+   Role tracks — the §02 index and the per-role problem pages.
+   ------------------------------------------------------------------ */
+
+.track-index {
+  list-style: none;
+  margin: 22px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.track-index a {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 4px 20px;
+  padding: 16px 4px 16px 0;
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.track-index a:hover {
+  background: var(--card);
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.track-index-role {
+  font-family: var(--sans);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.track-index-focus {
+  grid-column: 1;
+  color: var(--muted);
+  font-size: var(--fs-md);
+}
+
+.track-index-go {
+  grid-row: 1 / span 2;
+  grid-column: 2;
+  align-self: center;
+  color: var(--blue);
+  font-family: var(--mono);
+}
+
+/* ---------- a track's own page ---------- */
+
+.track-page {
+  max-width: var(--maxw);
+  margin: 0 auto;
+}
+
+.track-head {
+  padding: clamp(30px, 6vw, 64px) var(--gutter) clamp(24px, 4vw, 36px);
+}
+
+.track-role {
+  color: var(--blue);
+  margin-top: 22px;
+}
+
+.track-head h1 {
+  font-size: clamp(1.8rem, 4.4vw, 2.7rem);
+  margin-top: 10px;
+  max-width: 20ch;
+}
+
+.track-lede {
+  color: var(--ink-2);
+  font-size: var(--fs-lg);
+  max-width: 60ch;
+  margin-top: 16px;
+}
+
+.track-spec {
+  border-bottom: 1px solid var(--rule);
+}
+
+.track-main {
+  padding: clamp(34px, 5vw, 56px) var(--gutter) 76px;
+}
+
+.track-foot {
+  margin-top: 40px;
+}

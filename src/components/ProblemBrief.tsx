@@ -1,7 +1,10 @@
+import Link from "next/link";
 import { Section, Ticks } from "@/components/Section";
-import { problems, problemsLede, type Problem } from "@/content/assessment";
+import { type Problem } from "@/content/assessment";
+import { TRACKS, tracksIndexLede } from "@/content/tracks";
 
-function ProblemBrief({ problem }: { problem: Problem }) {
+/** One problem, as it appears on a track page. */
+export function ProblemBrief({ problem }: { problem: Problem }) {
   return (
     <article className="problem" id={problem.id} aria-labelledby={`${problem.id}-title`}>
       <div className="p-head">
@@ -44,14 +47,26 @@ function ProblemBrief({ problem }: { problem: Problem }) {
   );
 }
 
+/**
+ * §02 on the brief is an index of the five tracks rather than one set of
+ * problems — the work differs by role, the rules do not.
+ */
 export function Problems() {
   return (
-    <Section id="problems" lede={problemsLede}>
-      <div className="problems">
-        {problems.map((problem) => (
-          <ProblemBrief key={problem.id} problem={problem} />
+    <Section id="problems" lede={tracksIndexLede}>
+      <ul className="track-index">
+        {TRACKS.map((track) => (
+          <li key={track.role}>
+            <Link href={`/tracks/${track.role}`}>
+              <span className="track-index-role">{track.label}</span>
+              <span className="track-index-focus">{track.focus}</span>
+              <span className="track-index-go" aria-hidden="true">
+                &rarr;
+              </span>
+            </Link>
+          </li>
         ))}
-      </div>
+      </ul>
     </Section>
   );
 }
