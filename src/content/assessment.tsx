@@ -9,7 +9,9 @@ import { nodes } from "@/lib/nodes";
    rather than injected as raw HTML.
    ------------------------------------------------------------------ */
 
-export const headline = "Build a task manager. Then solve three problems inside it.";
+// Role-neutral and true to the provided starter: candidates do not build the
+// base app — they receive it working and solve their three problems in it.
+export const headline = "The task manager is built. The three problems are yours.";
 
 export const deck: ReactNode = (
   <>

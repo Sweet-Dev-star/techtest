@@ -504,26 +504,31 @@ const PROBLEMS: Record<DeveloperType, Problem[]> = {
   qa,
 };
 
-const FOCUS: Record<DeveloperType, { focus: string; lede: string }> = {
+const FOCUS: Record<DeveloperType, { focus: string; lede: string; deckProblems: string }> = {
   frontend: {
     focus: "Offline sync, rendering at size, accessibility",
     lede: "Three places where the starter's client falls over: a network that comes and goes, a list that outgrows naive rendering, and an interface that assumes a mouse and a pair of eyes.",
+    deckProblems: "offline editing that survives a flaky network, a task list that stays fast at five thousand rows, and an interface that works without a mouse",
   },
   backend: {
     focus: "Domain modelling, query design, concurrency",
     lede: "Three places where the starter's server is too simple to survive: a calendar problem, a read path that cannot scale, and writes that quietly lose each other.",
+    deckProblems: "recurring tasks and sub-tasks, search and pagination that survive a million rows, and concurrent writes that never lose an edit",
   },
   fullstack: {
     focus: "Recurrence, offline conflicts, access control",
     lede: "One problem in each layer, chosen so a weak answer in the middle shows up at both ends: the domain, the client, and the seam that guards them.",
+    deckProblems: "recurrence and hierarchy, offline editing and conflicts, and shared access and permissions",
   },
   devops: {
     focus: "Environments, pipeline, operability",
     lede: "The starter has no image, no pipeline and no way to answer what it is doing at 3am. Three problems about making it someone else's problem safely.",
+    deckProblems: "a reproducible environment, a pipeline that can block a bad change, and enough observability to debug it at 3am",
   },
   qa: {
     focus: "Strategy, defect hunting, reliable automation",
     lede: "The starter ships 35 passing tests, which is not the same as tested software. Three problems about knowing the difference and proving it.",
+    deckProblems: "a test strategy worth the name, real defects proven before they are fixed, and automation that never cries wolf",
   },
 };
 
@@ -537,6 +542,23 @@ export const TRACKS: Track[] = DEVELOPER_TYPES.map((type) => ({
 
 export function trackFor(role: string): Track | undefined {
   return TRACKS.find((track) => track.role === role);
+}
+
+/**
+ * The masthead deck, written for the candidate's own role, so the header names
+ * the three problems they will actually be given rather than the full-stack set.
+ */
+export function deckFor(role: string): ReactNode {
+  const focus = FOCUS[role as DeveloperType];
+  if (!focus) return null;
+  return (
+    <>
+      The base app is deliberately boring &mdash; lists, tasks, done or not done. We ship it
+      working, so you don&rsquo;t spend the clock on scaffolding. What we actually read is{" "}
+      <b>your three problems</b>: {focus.deckProblems}. Each is a place where a real product
+      quietly gets hard.
+    </>
+  );
 }
 
 export const tracksIndexLede: ReactNode = (

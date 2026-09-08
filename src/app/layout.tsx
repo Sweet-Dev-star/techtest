@@ -25,10 +25,11 @@ const mono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   title: "Task Manager Take-Home",
-  description: `${site.role} assessment: build a task manager, then solve three problems inside it — recurrence and hierarchy, offline editing and conflicts, shared access and permissions.`,
+  description:
+    "Take-home assessment: start from a working task-manager starter and solve three problems chosen for your role.",
   openGraph: {
     title: "Task Manager Take-Home",
-    description: `${site.role} assessment at ${site.company}. One project, three problems, ${site.effort}.`,
+    description: `Engineering take-home at ${site.company}. One starter, three problems for your role, ${site.effort}.`,
     type: "article",
   },
   robots: { index: false, follow: false },
