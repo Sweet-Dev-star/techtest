@@ -26,7 +26,7 @@ export async function loginAction(
   }
 
   await createSession(user.id);
-  redirect("/account");
+  redirect("/");
 }
 
 export async function signOutAction(): Promise<void> {

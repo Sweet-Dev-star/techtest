@@ -33,5 +33,6 @@ export async function registerAction(
   if ("errors" in result) return { errors: result.errors, values };
 
   await createSession(result.user.id);
-  redirect("/account");
+  // Land on the main page, where §02 now shows this candidate's own track.
+  redirect("/");
 }

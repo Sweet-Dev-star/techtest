@@ -7,21 +7,25 @@ import { Problems } from "@/components/ProblemBrief";
 import { Scoring } from "@/components/Scoring";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Submission } from "@/components/Submission";
+import { currentUser } from "@/lib/session";
 
-export default function AssessmentPage() {
+// Reads the session cookie, so the page renders per-request rather than static.
+export default async function AssessmentPage() {
+  const user = await currentUser();
+
   return (
     <>
       <a className="skip-link" href="#base">
         Skip to the brief
       </a>
 
-      <Masthead />
+      <Masthead user={user} />
 
       <div className="shell">
         <ContentsRail />
         <main>
           <BaseProject />
-          <Problems />
+          <Problems user={user} />
           <GroundRules />
           <Scoring />
           <Submission />

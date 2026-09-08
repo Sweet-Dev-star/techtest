@@ -1241,3 +1241,9 @@ footer {
 .track-foot {
   margin-top: 40px;
 }
+
+/* The role badge above a signed-in candidate's own problems in §02. */
+.track-you {
+  color: var(--blue);
+  margin: 22px 0 4px;
+}
