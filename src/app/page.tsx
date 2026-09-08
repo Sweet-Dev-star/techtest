@@ -7,11 +7,15 @@ import { Problems } from "@/components/ProblemBrief";
 import { Scoring } from "@/components/Scoring";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Submission } from "@/components/Submission";
+import { redirect } from "next/navigation";
 import { currentUser } from "@/lib/session";
 
-// Reads the session cookie, so the page renders per-request rather than static.
+// The brief is for signed-in candidates only. A visitor without a session is
+// sent to the login window rather than shown the problems. Reading the cookie
+// also makes this page render per-request rather than static.
 export default async function AssessmentPage() {
   const user = await currentUser();
+  if (!user) redirect("/login");
 
   return (
     <>
